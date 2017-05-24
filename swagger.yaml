@@ -19,6 +19,21 @@ consumes:
 produces:
   - application/json
 paths:
+  /status:
+    get:
+      description: |
+        Return API Service status
+      responses:
+        200:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Status'
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Status'
+
+
   /pets:
     get:
       description: |
@@ -109,6 +124,10 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 definitions:
+  Status:
+    properties:
+      result:
+        type: array
   Pet:
     allOf:
       - $ref: '#/definitions/NewPet'
