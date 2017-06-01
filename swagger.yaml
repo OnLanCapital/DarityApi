@@ -18,6 +18,7 @@ consumes:
   - application/json
 produces:
   - application/json
+  
 paths:
   /status:
     get:
@@ -32,7 +33,45 @@ paths:
           description: Default response
           schema:
             $ref: '#/definitions/Status'
-
+  /getSurvey:
+    get:
+      description: |
+        Return first login survey data
+      responses:
+        200:
+          description: Default response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Survey'
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Survey'
+  /login:
+    post:
+      description: |
+        login user
+      parameters:
+        - name: username
+          in: query
+          description: login username
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: login passwrod
+          required: true
+          type: string        
+      responses:
+        200:
+          description: Default response
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Status'
 
   /pets:
     get:
@@ -62,6 +101,7 @@ paths:
           schema:
             type: array
             items:
+              type: array
               $ref: '#/definitions/Pet'
         default:
           description: unexpected error
@@ -123,11 +163,30 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
+            
+            
 definitions:
   Status:
     properties:
       result:
         type: array
+  User:
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+        
+  Survey:
+    required:
+      - id
+      - message
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+    
   Pet:
     allOf:
       - $ref: '#/definitions/NewPet'
